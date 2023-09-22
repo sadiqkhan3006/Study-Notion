@@ -3,6 +3,8 @@ const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 //send otp for verification//
 exports.sendOTP = async (req, res) => {
   try {
@@ -153,4 +155,83 @@ exports.signUp = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+exports.login = async (req, res) => {
+  try {
+    //get data
+    const { email, password } = req.body;
+    //data validate
+    if (!email || !password) {
+      return res.status(403).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+    //check user existence//
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      return res.status(401).json({
+        success: false,
+        message: "User is not registered please Signup",
+      });
+    }
+    //generate jwt token , after matching passsword
+    if (await bcrypt.compare(password, existingUser.password)) {
+      const payload = {
+        email: existingUser.email,
+        id: existingUser._id,
+        role: existingUser.accountType,
+      };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "2h",
+      });
+      existingUser.token = token; //might throw error because of schema of User
+      existingUser.password = undefined;
+      //create cookie
+      const options = {
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 day
+        httpOnly: true,
+      };
+      res.cookie("token", token, options).status(200).json({
+        success: true,
+        token,
+        existingUser,
+        message: "Logged in successfully",
+      });
+    } else {
+      res.status(401).json({
+        success: false,
+        message: "Password is innocrrect",
+      });
+    }
+  } catch (error) {
+    console.log("Erro while logging in: ", error.message);
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+      message: "login failure",
+    });
+  }
+};
+exports.changePassword = async (req, res) => {
+  try {
+    //fetch data//
+    const { email, oldPassword, password, confirmPassword } = req.body;
+    //check existing user
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(500).json({
+        success: false,
+        message: "User is not registered with this email, please Signup",
+      });
+    }
+    if (password !== confirmPassword) {
+      return res.status(500).json({
+        success: false,
+        message: "Passwords dont match ,please re-enter",
+      });
+    }
+    //will complete it later
+  } catch (error) {}
 };
