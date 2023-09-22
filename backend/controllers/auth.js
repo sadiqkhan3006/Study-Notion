@@ -217,21 +217,6 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     //fetch data//
-    const { email, oldPassword, password, confirmPassword } = req.body;
-    //check existing user
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(500).json({
-        success: false,
-        message: "User is not registered with this email, please Signup",
-      });
-    }
-    if (password !== confirmPassword) {
-      return res.status(500).json({
-        success: false,
-        message: "Passwords dont match ,please re-enter",
-      });
-    }
     //will complete it later
   } catch (error) {}
 };
