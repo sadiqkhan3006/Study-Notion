@@ -1,6 +1,7 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const Course = require("../models/Course");
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
 //create profile karne ki need nhi hai kyuki  null pada hua hai user controller mein//
 
 exports.updateProfile = async (req, res) => {
@@ -10,9 +11,9 @@ exports.updateProfile = async (req, res) => {
     const id = req.user.id;
 
     //validation//
-    if (!contactNumber || !gender || id) {
+    if (!contactNumber || !gender || !id) {
       return res.status(400).json({
-        success: true,
+        success: false,
         message: "All fields are required",
       });
     }
@@ -117,7 +118,7 @@ exports.updateDisplayPicture = async (req, res) => {
       1000,
       1000
     );
-    console.log(image);
+    console.log("Uploaded Image: ", image);
     const updatedProfile = await User.findByIdAndUpdate(
       { _id: userId },
       { image: image.secure_url },

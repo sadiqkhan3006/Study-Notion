@@ -43,7 +43,7 @@ app.use("/api/v1/payment", paymentRoutes);
 app.get("/", (req, res) => {
   return res.json({
     success: true,
-    message: "Your server is up and running",
+    message: "Your server is up and running.",
   });
 });
 
@@ -51,4 +51,4 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log("Your server started at ", PORT);
 });
-//15:52
+//:54:00

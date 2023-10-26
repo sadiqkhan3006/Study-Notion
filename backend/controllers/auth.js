@@ -78,7 +78,6 @@ exports.signUp = async (req, res) => {
       !email ||
       !password ||
       !confirmPassword ||
-      !contactNumber ||
       !otp
     ) {
       return res.status(403).json({
@@ -110,14 +109,14 @@ exports.signUp = async (req, res) => {
     console.log("recent Otp: ", recentOtp);
 
     //validate otp//
-    if (recentOtp.length() == 0) {
+    if (recentOtp.length == 0) {
       //otp not found//
       return res.status(400).json({
         success: false,
         message: `OTP is not valid`,
       });
     }
-    if (otp !== recentOtp) {
+    if (otp !== recentOtp[0].otp) {
       return res.status(400).json({
         success: false,
         message: `Invalid OTP`,

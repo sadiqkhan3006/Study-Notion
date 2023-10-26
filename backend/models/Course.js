@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  description: {
+  courseDescription: {
     type: String,
     trim: true,
     required: true,
@@ -22,7 +22,7 @@ const courseSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Section",
-      required: true,
+      //required: true,
     },
   ],
   ratingAndReviews: [

@@ -54,7 +54,7 @@ exports.createCourse = async (req, res) => {
     }
 
     // Check if the tag given is valid
-    const categoryDetails = await Category.findById(category);
+    const categoryDetails = await Category.findById({ _id: category });
     if (!categoryDetails) {
       return res.status(404).json({
         success: false,
@@ -163,7 +163,7 @@ exports.getCourseDetails = async (req, res) => {
         },
       })
       .populate("category")
-      .populate("ratingAndReviews")
+      //.populate("ratingAndReviews")
       .populate({
         path: "courseContent",
         populate: {
