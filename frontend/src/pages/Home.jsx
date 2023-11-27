@@ -24,7 +24,7 @@ const Home = () => {
             <div
               className="flex  flex-row items-center gap-2 rounded-full
             px-10 py-[5px] transition-all 
-          duration-200 group-hover:bg-richblack-900 z-index-1
+          duration-200 group-hover:bg-richblack-900 
  "
             >
               <p>Become an Instructor</p>
