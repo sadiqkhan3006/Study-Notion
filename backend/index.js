@@ -5,6 +5,7 @@ const userRoutes = require("./routes/User");
 const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
 const profileRoutes = require("./routes/Profile");
+const contactUsRoute = require("./routes/Contact");
 require("dotenv").config();
 const { DbConnect } = require("./config/database");
 const cookieParser = require("cookie-parser");
@@ -20,7 +21,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    //origin: "http://localhost:3000",
+    origin: "*", //alow all access
     credentials: true,
   })
 );
@@ -38,6 +40,7 @@ app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/reach", contactUsRoute);
 
 //def route//
 app.get("/", (req, res) => {

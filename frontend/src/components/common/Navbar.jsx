@@ -11,15 +11,15 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 export const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
-  console.log("user:", user);
+  //console.log("user:", user);
   const { totalItems } = useSelector((state) => state.cart);
-  console.log("cartItem ", totalItems);
+  //console.log("cartItem ", totalItems);
   const location = useLocation();
   const [subLinks, setSublinks] = useState([]);
   const fetchSublinks = async () => {
     try {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
-      console.log("Printing Sublinks:", result.data.data);
+      //console.log("Printing Sublinks:", result.data.data);
       setSublinks(result.data.data);
     } catch (err) {
       console.log("catlogApi error : ", err.message);
