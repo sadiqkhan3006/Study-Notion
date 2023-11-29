@@ -168,7 +168,9 @@ exports.login = async (req, res) => {
       });
     }
     //check user existence//
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email }).populate({
+      path: "additionalDetails",
+    });
     if (!existingUser) {
       return res.status(401).json({
         success: false,
