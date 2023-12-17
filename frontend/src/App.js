@@ -17,6 +17,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { MyProfile } from "./components/core/Dashboard/MyProfile";
 import { Error } from "./pages/Error";
+import Settings from "./components/core/Dashboard/Settings";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ function App() {
           }
         >
           <Route path="my-profile" element={<MyProfile />} />
-          {/*<Route path="dashboard/Settings" element={<Settings />} /> */}
+          <Route path="Settings" element={<Settings />} />
 
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>

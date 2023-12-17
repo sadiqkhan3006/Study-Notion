@@ -6,8 +6,16 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
 exports.updateProfile = async (req, res) => {
   try {
+    //console.log("API HIT ", req.body);
     //get data
-    const { gender, dateOfBirth = "", about = "", contactNumber } = req.body;
+    const {
+      firstName,
+      lastName,
+      gender,
+      dateOfBirth = "",
+      about = "",
+      contactNumber,
+    } = req.body;
     const id = req.user.id;
 
     //validation//
@@ -18,7 +26,15 @@ exports.updateProfile = async (req, res) => {
       });
     }
     //find profile //
-    const userDetails = await User.findById({ _id: id });
+    const userDetails = await User.findByIdAndUpdate(
+      { _id: id },
+      {
+        firstName,
+        lastName,
+      },
+      { new: true }
+    );
+    console.log(userDetails);
     const profileId = userDetails.additionalDetails;
     const profileDetails = await Profile.findById({ _id: profileId });
 
@@ -29,10 +45,14 @@ exports.updateProfile = async (req, res) => {
     profileDetails.contactNumber = contactNumber;
 
     await profileDetails.save();
+    const UpdatedDetails = await User.findById({ _id: id }).populate(
+      "additionalDetails"
+    );
     //retrunr respkonse
     return res.status(200).json({
       success: true,
       message: "Profile Updated successfully",
+      updatedUserDetails: UpdatedDetails,
       profileDetails,
     });
   } catch (error) {
