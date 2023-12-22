@@ -1,11 +1,12 @@
 import * as Icons from "react-icons/vsc";
 import { useDispatch } from "react-redux";
 import { NavLink, matchPath, useLocation } from "react-router-dom";
-
+import { FiShoppingCart } from "react-icons/fi";
 import { resetCourseState } from "../../../slices/courseSlice";
 
 export default function SidebarLink({ link, iconName }) {
-  const Icon = Icons[iconName];
+  //console.log("inside Sublink: ", Icons);
+  const Icon = Icons[iconName] ? Icons[iconName] : FiShoppingCart;
   const location = useLocation();
   const dispatch = useDispatch();
   //konsa path highlight karwana hai

@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { MyProfile } from "./components/core/Dashboard/MyProfile";
 import { Error } from "./pages/Error";
 import Settings from "./components/core/Dashboard/Settings";
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -98,11 +100,8 @@ function App() {
 
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
-              {/* <Route path="dashboard/cart" element={<Cart />} />
-              <Route
-                path="dashboard/enrolled-courses"
-                element={<EnrolledCourses />}
-              /> */}
+              <Route path="cart" element={<Cart />} />
+              <Route path="enrolled-courses" element={<EnrolledCourses />} />
             </>
           )}
         </Route>
