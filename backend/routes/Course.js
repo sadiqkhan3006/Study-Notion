@@ -9,6 +9,10 @@ const {
   createCourse,
   getAllCourses,
   getCourseDetails,
+  getFullCourseDetails,
+  editCourse,
+  getInstructorCourses,
+  deleteCourse,
 } = require("../controllers/course");
 
 // Categories Controllers Import
@@ -27,9 +31,9 @@ const {
 
 // Sub-Sections Controllers Import
 const {
-  createSubsection,
-  updateSubsection,
-  deleteSubsection,
+  createSubSection,
+  updateSubSection,
+  deleteSubSection,
 } = require("../controllers/subSection");
 
 // Rating Controllers Import
@@ -53,6 +57,12 @@ const {
 
 // Courses can Only be Created by Instructors
 router.post("/createCourse", auth, isInstructor, createCourse);
+router.post("/editCourse", auth, isInstructor, editCourse);
+router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
+// Get Details for a Specific Courses
+router.post("/getFullCourseDetails", auth, getFullCourseDetails);
+// Get all Courses Under a Specific Instructor
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 //Add a Section to a Course
 router.post("/addSection", auth, isInstructor, createSection);
 // Update a Section
@@ -60,11 +70,11 @@ router.post("/updateSection", auth, isInstructor, updateSection);
 // Delete a Section
 router.post("/deleteSection", auth, isInstructor, deleteSection);
 // Edit Sub Section
-router.post("/updateSubSection", auth, isInstructor, updateSubsection);
+router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 // Delete Sub Section
-router.post("/deleteSubSection", auth, isInstructor, deleteSubsection);
+router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 // Add a Sub Section to a Section
-router.post("/addSubSection", auth, isInstructor, createSubsection);
+router.post("/addSubSection", auth, isInstructor, createSubSection);
 // Get all Registered Courses
 router.get("/getAllCourses", getAllCourses);
 // Get Details for a Specific Courses

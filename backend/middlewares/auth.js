@@ -13,6 +13,7 @@ exports.auth = async (req, res, next) => {
       req.header("Authorization").replace("Bearer ", "");
     console.log("inside auth middleware token", req.body);
     if (!token) {
+      console.log("heyy");
       return res.status(401).json({
         success: false,
         message: "Token is Missing",
@@ -70,6 +71,7 @@ exports.isInstructor = async (req, res, next) => {
     }
     next();
   } catch (err) {
+    console.log(err.message);
     return res.status(500).json({
       success: false,
       message: "User role failed to be verified",

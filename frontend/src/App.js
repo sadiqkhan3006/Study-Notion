@@ -20,6 +20,10 @@ import { Error } from "./pages/Error";
 import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
+//import Instructor from "./components/core/Dashboard/Instructor";
+import MyCourses from "./components/core/Dashboard/MyCourses";
+import AddCourse from "./components/core/Dashboard/AddCourse";
+import EditCourse from "./components/core/Dashboard/EditCourse";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -97,7 +101,14 @@ function App() {
         >
           <Route path="my-profile" element={<MyProfile />} />
           <Route path="Settings" element={<Settings />} />
-
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              {/* <Route path="instructor" element={<Instructor />} /> */}
+              <Route path="my-courses" element={<MyCourses />} />
+              <Route path="add-course" element={<AddCourse />} />
+              <Route path="edit-course/:courseId" element={<EditCourse />} />
+            </>
+          )}
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="cart" element={<Cart />} />
