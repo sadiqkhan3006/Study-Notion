@@ -16,10 +16,12 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import { Dashboard } from "./pages/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { MyProfile } from "./components/core/Dashboard/MyProfile";
+import Catalog from "./pages/Catalog";
 import { Error } from "./pages/Error";
 import Settings from "./components/core/Dashboard/Settings";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
 import Cart from "./components/core/Dashboard/Cart";
+import CourseDetails from "./pages/CourseDetails";
 //import Instructor from "./components/core/Dashboard/Instructor";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import AddCourse from "./components/core/Dashboard/AddCourse";
@@ -90,6 +92,8 @@ function App() {
             </OpenRoute>
           }
         />
+        <Route path="catalog/:catalogName" element={<Catalog />} />
+        <Route path="courses/:courseId" element={<CourseDetails />} />
 
         <Route
           path="dashboard/"

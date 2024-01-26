@@ -58,7 +58,7 @@ export const cartSlice = createSlice({
         "totalPrice",
         JSON.stringify(state.totalPrice + course.price)
       );
-
+      toast.success("Course added to cart");
       // Create and return a new state object
       //best practise
       return {
@@ -108,7 +108,7 @@ export const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       localStorage.setItem("totalItems", JSON.stringify(totalItems));
       localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
-
+      toast.success("Cart reset successfull.");
       return {
         ...state,
         cart: updatedCart,

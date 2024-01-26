@@ -18,30 +18,36 @@ exports.createCourse = async (req, res) => {
       courseDescription,
       whatYouWillLearn,
       price,
-      tag,
+      tag: _tag,
       category,
       status,
-      instructions,
+      instructions: _instructions,
     } = req.body;
 
     // Get thumbnail image from request files
     const thumbnail = req.files.thumbnailImage;
-
+    // Convert the tag and instructions from stringified Array to Array
+    const tag = JSON.parse(_tag);
+    const instructions = JSON.parse(_instructions);
+    console.log("tag", tag);
+    console.log("instructions", instructions);
     // Check if any of the required fields are missing
     if (
       !courseName ||
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !tag ||
+      !tag.length ||
       !thumbnail ||
-      !category
+      !category ||
+      !instructions.length
     ) {
       return res.status(400).json({
         success: false,
         message: "All Fields are Mandatory",
       });
     }
+
     if (!status || status === undefined) {
       status = "Draft";
     }
@@ -58,6 +64,7 @@ exports.createCourse = async (req, res) => {
     }
 
     // Check if the tag given is valid
+    console.log("category", category);
     const categoryDetails = await Category.findById({ _id: category });
     if (!categoryDetails) {
       return res.status(404).json({
@@ -84,7 +91,7 @@ exports.createCourse = async (req, res) => {
       status: status,
       instructions: instructions,
     });
-
+    //console.log("new course: ", newCourse);
     // Add the new course to the User Schema of the Instructor
     await User.findByIdAndUpdate(
       {
@@ -102,11 +109,13 @@ exports.createCourse = async (req, res) => {
       { _id: category },
       {
         $push: {
-          course: newCourse._id,
+          courses: newCourse._id,
         },
       },
       { new: true }
     );
+    //console.log("HEREEEEEEEE", categoryDetails2);
+
     // Return the new course and a success message
     res.status(200).json({
       success: true,
@@ -220,49 +229,67 @@ exports.getAllCourses = async (req, res) => {
 };
 
 //getcourseDetails //
+
 exports.getCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
-    //find course details
-    const courseDetails = await Course.find({ _id: courseId })
+    const courseDetails = await Course.findOne({
+      _id: courseId,
+    })
       .populate({
         path: "instructor",
         populate: {
           path: "additionalDetails",
-          model: "User",
         },
       })
       .populate("category")
-      //.populate("ratingAndReviews")
+      .populate("ratingAndReviews")
       .populate({
         path: "courseContent",
         populate: {
           path: "subsection",
-          model: "Subsection",
           select: "-videoUrl",
         },
       })
       .exec();
+
     if (!courseDetails) {
       return res.status(400).json({
         success: false,
-        message: "Couldnt find the course with this id",
+        message: `Could not find course with id: ${courseId}`,
       });
     }
 
+    // if (courseDetails.status === "Draft") {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: `Accessing a draft course is forbidden`,
+    //   });
+    // }
+
+    let totalDurationInSeconds = 0;
+    courseDetails.courseContent.forEach((content) => {
+      content.subsection.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      });
+    });
+
+    const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
     return res.status(200).json({
       success: true,
-      message: "Course details fetched successfully",
-      data: courseDetails,
+      data: {
+        courseDetails,
+        totalDuration,
+      },
     });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
-  //13:00
 };
 exports.getFullCourseDetails = async (req, res) => {
   try {
