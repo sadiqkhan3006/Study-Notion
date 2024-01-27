@@ -29,7 +29,7 @@ exports.resetPasswordToken = async (req, res) => {
       { new: true }
     );
     //create url
-    const url = `https://studynotion-backend-459p.onrender.com/update-password/${token}`;
+    const url = `https://study-notion-frontend-red-nine.vercel.app/update-password/${token}`;
     //send mail containing the url
     await mailSender(
       email,
