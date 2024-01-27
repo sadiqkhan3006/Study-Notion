@@ -171,13 +171,14 @@ const enrollStudents = async (courses, userId, res) => {
           .status(500)
           .json({ success: false, error: "Course not found" });
       }
-      console.log("Updated course: ", enrolledCourse);
-
+      //console.log("Updated course: ", enrolledCourse);
+      console.log("courseId, userId: ", courseId, userId);
       const courseProgress = await CourseProgress.create({
-        courseID: courseId,
+        courseId: courseId,
         userId: userId,
         completedVideos: [],
       });
+      console.log("courseProgress: ", courseProgress);
       // Find the student and add the course to their list of enrolled courses
       const enrolledStudent = await User.findByIdAndUpdate(
         userId,

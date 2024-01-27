@@ -22,6 +22,7 @@ const {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
   LECTURE_COMPLETION_API,
+  LECTURE_COMPLETION_DETAILS_API,
 } = courseEndpoints;
 
 export const getAllCourses = async () => {
@@ -368,22 +369,60 @@ export const markLectureAsComplete = async (data, token) => {
 // create a rating for course
 export const createRating = async (data, token) => {
   const toastId = toast.loading("Loading...");
+  let message = "";
   let success = false;
   try {
     const response = await apiConnector("POST", CREATE_RATING_API, data, {
       Authorization: `Bearer ${token}`,
     });
-    console.log("CREATE RATING API RESPONSE............", response);
+
+    console.log("CREATE RATING API RESPONSE............", response?.data);
     if (!response?.data?.success) {
-      throw new Error("Could Not Create Rating");
+      throw new Error(
+        response?.response?.data?.message || "Could Not Create Rating"
+      );
     }
+
     toast.success("Rating Created");
     success = true;
   } catch (error) {
     success = false;
     console.log("CREATE RATING API ERROR............", error);
-    toast.error(error.message);
+    toast.error(error?.response?.data?.message || "Error creating rating");
   }
   toast.dismiss(toastId);
   return success;
+};
+
+//optional noo neeed
+export const courseCompletionDetails = async (data, token) => {
+  let result = null;
+  console.log(" before Course Completion api ", data);
+  const toastId = toast.loading("Loading...");
+  try {
+    const response = await apiConnector(
+      "GET",
+      `${LECTURE_COMPLETION_DETAILS_API}/${data.courseId}`,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    console.log(
+      "Course Completion api RESPONSE............",
+      response.data.data
+    );
+
+    if (!response.data.message) {
+      throw new Error(response.data.error);
+    }
+    //toast.success("Lecture Completed");
+    result = response.data.data;
+  } catch (error) {
+    console.log("MARK_LECTURE_AS_COMPLETE_API API ERROR............", error);
+    toast.error(error.message);
+    //result = false;
+  }
+  toast.dismiss(toastId);
+  return result;
 };

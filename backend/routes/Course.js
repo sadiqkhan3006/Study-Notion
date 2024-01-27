@@ -50,6 +50,11 @@ const {
   isStudent,
   isAdmin,
 } = require("../middlewares/auth");
+const {
+  updateCourseProgress,
+  getCourseProgress,
+  getProgressPercentage,
+} = require("../controllers/courseProgress");
 
 // ********************************************************************************************************
 //                                      Course routes
@@ -79,6 +84,8 @@ router.post("/addSubSection", auth, isInstructor, createSubSection);
 router.get("/getAllCourses", getAllCourses);
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails);
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
+router.get("/getCourseProgress/:courseId", auth, getCourseProgress);
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

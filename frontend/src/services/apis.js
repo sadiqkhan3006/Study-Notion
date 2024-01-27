@@ -1,6 +1,7 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 //console.log(process.env.REACT_APP_BASE_URL);
 // AUTH ENDPOINTS
+//LECTURE_COMPLETION_API
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sendotp",
   SIGNUP_API: BASE_URL + "/auth/signup",
@@ -41,6 +42,7 @@ export const courseEndpoints = {
     BASE_URL + "/course/getFullCourseDetails",
   LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
   CREATE_RATING_API: BASE_URL + "/course/createRating",
+  LECTURE_COMPLETION_DETAILS_API: BASE_URL + "/course/getCourseProgress",
 };
 
 // RATINGS AND REVIEWS

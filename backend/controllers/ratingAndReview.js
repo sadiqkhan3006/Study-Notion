@@ -8,7 +8,7 @@ exports.createRating = async (req, res) => {
   try {
     //get userid
     const userId = req.user.id;
-
+    console.log("...ratngsssss");
     //fecthdata from req
     const { rating, review, courseId } = req.body;
     //check user enrolled or not
@@ -27,7 +27,7 @@ exports.createRating = async (req, res) => {
       user: userId,
       course: courseId,
     });
-    if (!alreadyReviewed) {
+    if (alreadyReviewed) {
       return res.status(403).json({
         success: false,
         message: "Course is already reviewed by the user ",

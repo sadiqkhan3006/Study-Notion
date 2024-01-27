@@ -26,6 +26,8 @@ import CourseDetails from "./pages/CourseDetails";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import AddCourse from "./components/core/Dashboard/AddCourse";
 import EditCourse from "./components/core/Dashboard/EditCourse";
+import ViewCourse from "./pages/ViewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -117,6 +119,23 @@ function App() {
             <>
               <Route path="cart" element={<Cart />} />
               <Route path="enrolled-courses" element={<EnrolledCourses />} />
+            </>
+          )}
+        </Route>
+        {/* For the watching course lectures */}
+        <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              />
             </>
           )}
         </Route>
