@@ -46,12 +46,12 @@ app.use("/api/v1/reach", contactUsRoute);
 app.get("/", (req, res) => {
   return res.json({
     success: true,
-    message: "Your server is up and running.",
+    message: `Your server is up and running at ${PORT}`,
   });
 });
 
 //activate server //
 app.listen(PORT, () => {
-  console.log("Your server started at ", PORT);
+  console.log(`Your server started at `, PORT);
 });
 //:54:00
