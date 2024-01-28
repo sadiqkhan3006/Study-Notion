@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
+import useBreakpoint from "../../hooks/useBreakPoint";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -20,6 +21,8 @@ import { ratingsEndpoints } from "../../services/apis";
 function ReviewSlider() {
   const [reviews, setReviews] = useState([]);
   const truncateWords = 15;
+  const breakpoint = useBreakpoint();
+  const slidesPerView = breakpoint === "sm" ? 1 : breakpoint == "md" ? 2 : 4;
 
   useEffect(() => {
     (async () => {
@@ -34,13 +37,13 @@ function ReviewSlider() {
   }, []);
 
   // console.log(reviews)
-
+  //max-w-maxContentTab lg:max-w-maxContent
   return (
     <div className="text-white">
-      <div className="my-[50px] h-[184px] max-w-maxContentTab lg:max-w-maxContent">
+      <div className=" my-[50px] h-[184px] max-w-maxContentTab lg:max-w-maxContent">
         <Swiper
-          slidesPerView={4}
-          spaceBetween={25}
+          slidesPerView={slidesPerView}
+          spaceBetween={24}
           loop={true}
           freeMode={true}
           autoplay={{
@@ -53,7 +56,7 @@ function ReviewSlider() {
           {reviews.map((review, i) => {
             return (
               <SwiperSlide key={i}>
-                <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25">
+                <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25  ">
                   <div className="flex items-center gap-4">
                     <img
                       src={

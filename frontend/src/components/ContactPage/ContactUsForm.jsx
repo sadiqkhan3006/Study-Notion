@@ -145,7 +145,7 @@ const ContactUsForm = () => {
           </div>
           <div className="flex w-[calc(100%-90px)] flex-col gap-2">
             <input
-              type="number"
+              type="tel"
               name="phonenumber"
               id="phonenumber"
               placeholder="12345 67890"

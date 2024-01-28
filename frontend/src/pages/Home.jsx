@@ -34,11 +34,11 @@ const Home = () => {
           </div>
         </Link>
         {/* add shadow forbutton upar  */}
-        <div className="text-center text-4xl font-semibold mt-7">
+        <div className="text-left ml-1 lg:text-center lg:ml-0 text-4xl font-semibold mt-7">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
         </div>
-        <div className=" mt-4 w-[90%] text-center text-lg font-bold text-richblack-300">
+        <div className="ml-2 mt-4 w-[358px] lg:ml-0 lg:w-[90%] text-left lg:text-center text-lg font-bold text-richblack-300">
           With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
@@ -53,14 +53,19 @@ const Home = () => {
             Book a Demo
           </CTAButton>
         </div>
-        <div className="mx-3 my-12 shadow-blue-200">
-          <video muted loop autoPlay>
+        <div className="mr-3 lg:mx-3 my-12 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+          <video
+            className=" shadow-[10px_10px_rgba(255,255,255)] lg:shadow-[20px_20px_rgba(255,255,255)]"
+            muted
+            loop
+            autoPlay
+          >
             <source src={Banner} type="video/mp4" />
           </video>
         </div>
         <div>
           <CodeBlocks
-            position={"lg:flex-row"}
+            position={"flex-col lg:flex-row"}
             heading={
               <div className="text-4xl font-semibold">
                 Unlock Your
@@ -81,14 +86,15 @@ const Home = () => {
               linkto: "/login",
               active: false,
             }}
-            codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+            codeblock={`<!DOCTYPE html>\n<html>\nhead><>Example</\ntitle><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\nnav><ahref="one/">One</\na><ahref="two/">Two</\na><ahref="three/">Three</a>`}
             codeColor={"text-yellow-25"}
+            backgroundGradient={<div className="codeblock1 absolute"></div>}
           />
         </div>
         {/* Code Section 2 */}
         <div>
           <CodeBlocks
-            position={"lg:flex-row-reverse"}
+            position={"flex-col lg:flex-row-reverse"}
             heading={
               <div className="text-4xl font-semibold">
                 Start
@@ -108,8 +114,9 @@ const Home = () => {
               linkto: "/login",
               active: false,
             }}
-            codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+            codeblock={`<!DOCTYPE html>\n<html>\nhead><>Example</\ntitle><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\nnav><ahref="one/">One</\na><ahref="two/">Two</\na><ahref="three/">Three</a>`}
             codeColor={"text-yellow-25"}
+            backgroundGradient={<div className="codeblock1 absolute"></div>}
           />
         </div>
         <ExploreMore />
@@ -136,14 +143,14 @@ const Home = () => {
           </div>
         </div>
         <div className="mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7">
-          <div className="flex flex-row gap-5 mb-10 mt-[95px]">
-            <div className="text-4xl font-semibold w-[45%]">
+          <div className="flex flex-col lg:flex-row gap-5 mb-10 mt-[95px]">
+            <div className="text-4xl text-justify font-semibold w-[90%] lg:w-[45%]">
               Get the Skills you need for a
               <HighlightText text={"Job that is in demand"} />
             </div>
 
-            <div className="flex flex-col gap-10 w-[40%] items-start">
-              <div className="text-[16px]">
+            <div className="flex flex-col gap-10 w-[90%] lg:w-[40%] items-start">
+              <div className="text-[16px] text-justify">
                 The modern StudyNotion is the dictates its own terms. Today, to
                 be a competitive specialist requires more than professional
                 skills.
@@ -163,7 +170,7 @@ const Home = () => {
       <div className="w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white">
         <InstructorSection />
 
-        <h2 className="text-center text-4xl font-semobold mt-10">
+        <h2 className="text-center text-4xl font-semobold mt-12">
           Reviews from other learners
         </h2>
         <ReviewSlider />
