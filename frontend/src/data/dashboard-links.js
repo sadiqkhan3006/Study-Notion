@@ -41,11 +41,13 @@ export const sidebarLinks = [
     type: ACCOUNT_TYPE.STUDENT,
     icon: "FiShoppingCart",
   },
-  {
-    id: 7,
-    name: "Purchase History",
-    path: "/dashboard/purchase-history",
-    type: ACCOUNT_TYPE.STUDENT,
-    icon: "VscHistory",
-  },
 ];
+
+//future scope
+// {
+//   id: 7,
+//   name: "Purchase History",
+//   path: "/dashboard/purchase-history",
+//   type: ACCOUNT_TYPE.STUDENT,
+//   icon: "VscHistory",
+// },

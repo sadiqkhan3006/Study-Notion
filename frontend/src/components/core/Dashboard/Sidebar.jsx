@@ -77,11 +77,11 @@ export default function Sidebar({ isMenuOpen, setIsMenuOpen }) {
           onClick={() => {
             setIsMenuOpen((prev) => !prev);
           }}
-          className={`${
+          className={` absolute ${
             isMenuOpen
-              ? "right-[3%] p-3 text-md  top-[2.5rem]"
-              : "left-[3%] top-[2.5rem] text-xs p-2"
-          } top-[25%] md:hidden absolute text-richblack-800   
+              ? "right-[3%] p-3 text-md  top-7 "
+              : "left-[3%] top-7 text-xs p-2"
+          } top-[25%] md:hidden  text-richblack-800   
       rounded-2xl  bg-yellow-100 
       z-20`}
         >
