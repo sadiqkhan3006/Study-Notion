@@ -17,7 +17,7 @@ import {
 } from "../../../../services/operations/courseDetailsAPI";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import ConfirmationModal from "../../../common/ConfirmationModal";
-
+//import useBreakpoint from "../../../../hooks/useBreakPoint";
 export default function CoursesTable({ courses, setCourses }) {
   console.log("table ke andar hai : ", courses[0]);
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function CoursesTable({ courses, setCourses }) {
   const [loading, setLoading] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
   const TRUNCATE_LENGTH = 30;
-
+  //const breakpoint = useBreakpoint();
   const handleCourseDelete = async (courseId) => {
     setLoading(true);
     await deleteCourse({ courseId: courseId }, token);
@@ -43,10 +43,10 @@ export default function CoursesTable({ courses, setCourses }) {
 
   return (
     <>
-      <Table className="rounded-xl border border-richblack-800 ">
-        <Thead>
-          <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
-            <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100">
+      <Table className="hidden md:table rounded-xl border border-richblack-800 ">
+        <Thead className="">
+          <Tr className="flex flex-row gap-y-10  gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
+            <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100 ">
               Courses
             </Th>
             <Th className="text-left text-sm font-medium uppercase text-richblack-100">
@@ -157,6 +157,110 @@ export default function CoursesTable({ courses, setCourses }) {
           )}
         </Tbody>
       </Table>
+      {/* for mobile */}
+      <div className="flex md:hidden flex-col items-center rounded-xl border border-richblack-400">
+        <div>
+          {courses?.length === 0 ? (
+            <div className="f">
+              <div className="py-10 ml-[3rem] justify-center text-center text-xl font-medium text-richblack-100">
+                No courses found
+                {/* TODO: Need to change this state */}
+              </div>
+            </div>
+          ) : (
+            courses?.map((course) => (
+              <div
+                key={course._id}
+                className="flex  flex-col gap-y-4 border-b border-richblack-400   p-4 "
+              >
+                <div className="flex flex-1  lg:gap-x-4">
+                  <img
+                    src={course?.thumbnail}
+                    alt={course?.courseName}
+                    className="h-[148px] w-full rounded-lg object-cover"
+                  />
+                </div>
+                <div className="flex flex-row gap-x-2 items-center ">
+                  <div className="flex flex-col justify-between gap-y-1">
+                    <p className="text-lg font-semibold text-richblack-5">
+                      {course.courseName}
+                    </p>
+                    <p className="text-xs text-richblack-300">
+                      {course.courseDescription.split(" ").length >
+                      TRUNCATE_LENGTH
+                        ? course.courseDescription
+                            .split(" ")
+                            .slice(0, TRUNCATE_LENGTH)
+                            .join(" ") + "..."
+                        : course.courseDescription}
+                    </p>
+                    <p className="text-[12px] text-white">
+                      Created: {formatDate(course.createdAt)}
+                    </p>
+                    {course.status === COURSE_STATUS.DRAFT ? (
+                      <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                        <HiClock size={14} />
+                        Drafted
+                      </p>
+                    ) : (
+                      <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
+                        <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
+                          <FaCheck size={8} />
+                        </div>
+                        Published
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-y-1 items-center">
+                    <div className="text-sm font-medium text-richblack-100">
+                      {/* {course.courseContent[0].subsection[0].timeDuration} */}
+                      2h 30min
+                    </div>
+                    <div className="text-sm font-medium text-richblack-100">
+                      ₹{course.price}
+                    </div>
+                    <div className="text-sm flex font-medium text-richblack-100 ">
+                      <button
+                        disabled={loading}
+                        onClick={() => {
+                          navigate(`/dashboard/edit-course/${course._id}`);
+                        }}
+                        title="Edit"
+                        className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
+                      >
+                        <FiEdit2 size={20} />
+                      </button>
+                      <button
+                        disabled={loading}
+                        onClick={() => {
+                          setConfirmationModal({
+                            text1: "Do you want to delete this course?",
+                            text2:
+                              "All the data related to this course will be deleted",
+                            btn1Text: !loading ? "Delete" : "Loading...  ",
+                            btn2Text: "Cancel",
+                            btn1Handler: !loading
+                              ? () => handleCourseDelete(course._id)
+                              : () => {},
+                            btn2Handler: !loading
+                              ? () => setConfirmationModal(null)
+                              : () => {},
+                          });
+                        }}
+                        title="Delete"
+                        className="px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
+                      >
+                        <RiDeleteBin6Line size={20} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </>
   );

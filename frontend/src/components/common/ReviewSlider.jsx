@@ -22,7 +22,7 @@ function ReviewSlider() {
   const [reviews, setReviews] = useState([]);
   const truncateWords = 15;
   const breakpoint = useBreakpoint();
-  const slidesPerView = breakpoint === "sm" ? 1 : breakpoint == "md" ? 2 : 4;
+  const slidesPerView = breakpoint === "sm" ? 1 : breakpoint === "md" ? 2 : 4;
 
   useEffect(() => {
     (async () => {

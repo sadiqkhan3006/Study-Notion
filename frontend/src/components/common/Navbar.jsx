@@ -57,7 +57,7 @@ export const Navbar = () => {
           // top-[-13rem] left-[25rem]
           className={`${
             toggleMobileMenu ? "top-[3.5rem]" : "top-[-23rem] "
-          } absolute bg-richblack-700 lg:hidden w-screen  z-20  left-0 
+          } absolute bg-richblack-700 lg:hidden w-screen  z-30  left-0 
           text-richblack-25 flex flex-col transition-top ease-linear  duration-200`}
         >
           <ul className="  text-richblack-25 flex flex-col items-center gap-y-5 p-5 ">
@@ -179,7 +179,9 @@ export const Navbar = () => {
                 </button>
               </Link>
             )}
-            {token !== null && <ProfileDropDown />}
+            {token !== null && (
+              <ProfileDropDown setToggleMobileMenu={setToggleMobileMenu} />
+            )}
           </div>
         </div>
 
