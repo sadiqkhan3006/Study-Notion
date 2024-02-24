@@ -3,12 +3,15 @@ import { BsChevronDown } from "react-icons/bs";
 import { IoIosArrowBack } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-
+import { FaArrowRight } from "react-icons/fa";
 import IconBtn from "../../common/IconBtn";
-
+import { RiArrowLeftDoubleLine } from "react-icons/ri";
+import useBreakpoint from "../../../hooks/useBreakPoint";
 export default function VideoDetailsSidebar({ setReviewModal }) {
   const [activeStatus, setActiveStatus] = useState("");
   const [videoBarActive, setVideoBarActive] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const breakpoint = useBreakpoint();
   const navigate = useNavigate();
   const location = useLocation();
   const { sectionId, subSectionId } = useParams();
@@ -40,7 +43,51 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800">
+      {/* <button
+        onClick={() => {
+          setIsMenuOpen((prev) => !prev);
+        }}
+        className={` absolute ${
+          isMenuOpen
+            ? "right-[3%] p-3 text-md  top-[3rem]"
+            : "left-[3%] top-[3rem] text-xs p-2"
+        } top-[25%] md:hidden  text-richblack-800   
+      rounded-2xl  bg-yellow-100 
+      z-20`}
+      >
+        {isMenuOpen ? (
+          <RiArrowLeftDoubleLine />
+        ) : (
+          <FaArrowRight className=" " />
+        )}
+      </button> */}
+      <div
+        className={`${
+          breakpoint === "sm" ? (isMenuOpen ? "left-0" : "left-[-90%]") : ""
+        } flex absolute  md:static z-10 h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800`}
+      >
+        {/* right-[-40%] top-[5rem] p-4 */}
+        <button
+          onClick={() => {
+            setIsMenuOpen((prev) => !prev);
+          }}
+          className={` absolute ${
+            isMenuOpen
+              ? "right-[3%] p-3 text-md  top-[5rem]"
+              : "right-[-40%] top-[1em] text-xs p-4"
+          } top-[25%] md:hidden  text-richblack-800   
+      rounded-2xl  bg-yellow-100 
+      z-20`}
+        >
+          {isMenuOpen ? (
+            <RiArrowLeftDoubleLine />
+          ) : (
+            <span className="text-bold flex justify-center items-center gap-x-2">
+              Sidebar
+              <FaArrowRight className=" " />
+            </span>
+          )}
+        </button>
         <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
           <div className="flex w-full items-center justify-between ">
             <div

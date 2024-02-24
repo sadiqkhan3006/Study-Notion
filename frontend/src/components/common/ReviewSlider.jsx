@@ -46,8 +46,9 @@ function ReviewSlider() {
           spaceBetween={24}
           loop={true}
           freeMode={true}
+          pagination={true}
           autoplay={{
-            delay: 2500,
+            delay: 2000,
             disableOnInteraction: false,
           }}
           modules={[FreeMode, Pagination, Autoplay]}
@@ -55,7 +56,7 @@ function ReviewSlider() {
         >
           {reviews.map((review, i) => {
             return (
-              <SwiperSlide key={i}>
+              <SwiperSlide className="mb-10" key={i}>
                 <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25  ">
                   <div className="flex items-center gap-4">
                     <img

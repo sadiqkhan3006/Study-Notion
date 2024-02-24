@@ -21,6 +21,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log("course : ", course);
   //console.log("user : ", user);
   const {
     thumbnail: ThumbnailImage,
@@ -72,7 +73,8 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           </div>
           <div className="flex flex-col gap-4">
             <button
-              className="yellowButton"
+              className={`yellowButton disabled:bg-yellow-400 disabled:cursor-not-allowed `}
+              disabled={course.instructor._id === user._id ? true : false}
               onClick={
                 user && course?.studentsEnrolled.includes(user?._id)
                   ? () => navigate("/dashboard/enrolled-courses")
